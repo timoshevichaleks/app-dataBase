@@ -1,1 +1,29 @@
-<p>customer-details works!</p>
+<h2 class="py-2">Добавить покупателя</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div class="mb-3">
+    <label for="name">Имя Фамилия</label>
+    <input class="form-control" type="text" id="name" placeholder="Имя Фамилия" formControlName="name">
+  </div>
+
+  <div class="mb-3">
+    <label for="email">Email</label>
+    <input class="form-control" type="text" id="email" placeholder="Email" formControlName="email">
+  </div>
+
+  <div class="mb-3">
+    <label for="mobile">Телефон</label>
+    <input class="form-control" type="tel" id="mobile" placeholder="Телефон" formControlName="mobile">
+  </div>
+
+  <div class="mb-3">
+    <label for="location">Город</label>
+    <input class="form-control" type="text" id="location" placeholder="Город" formControlName="location">
+  </div>
+
+  <div class="mb-3">
+    <button class="btn btn-info" [disabled]="form.invalid">Сохранить</button>
+  </div>
+
+</form>
