@@ -1,7 +1,7 @@
 export interface Customer {
-  key?: string;
-  name: string;
-  email: string;
-  mobile: string;
-  location: string;
+  key?: string | null;
+  name: string | null;
+  email: string | null;
+  mobile: string | null;
+  location: string | null;
 }

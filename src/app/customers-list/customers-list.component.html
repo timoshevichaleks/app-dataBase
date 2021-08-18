@@ -29,10 +29,10 @@
 </ng-template>
 
 <ng-template #thenBlock let-customer>
-  <td><input type="text" class="form-control form-control-sm" #name value="{{customer.name}}"></td>
-  <td><input type="text" class="form-control form-control-sm" #email value="{{customer.email}}"></td>
-  <td><input type="text" class="form-control form-control-sm" #mobile value="{{customer.mobile}}"></td>
-  <td><input type="text" class="form-control form-control-sm" #location value="{{customer.location}}"></td>
+  <td><input type="text" class="form-control form-control-sm" #name value="{{customer.name}}" (blur)="setValue('name', name.value, customer.name)"></td>
+  <td><input type="text" class="form-control form-control-sm" #email value="{{customer.email}}" (blur)="setValue('email', email.value, customer.email)"></td>
+  <td><input type="text" class="form-control form-control-sm" #mobile value="{{customer.mobile}}" (blur)="setValue('mobile', mobile.value, customer.mobile)"></td>
+  <td><input type="text" class="form-control form-control-sm" #location value="{{customer.location}}" (blur)="setValue('location', location.value, customer.location)"></td>
 </ng-template>
 
 <ng-template #elseBlock let-customer>

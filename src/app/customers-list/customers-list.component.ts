@@ -10,6 +10,8 @@ import { HttpService } from '../shared/http.service';
 export class CustomersListComponent implements OnInit {
 
   isEditPos: number | null = null;
+  isChanged: boolean = false;
+  private tempCustomer: any;
 
   constructor(public httpService: HttpService) { }
 
@@ -18,24 +20,55 @@ export class CustomersListComponent implements OnInit {
   }
 
   editCustomer(i: number): void {
+    this.tempCustomer = this.resetCustomer();
     this.isEditPos = i;
   }
 
   cancelEdit(): void {
+    this.tempCustomer = this.resetCustomer();
     this.isEditPos = null;
+    this.isChanged = false;
   }
 
   saveCustomer(customer: Customer, i: number): void {
-    console.log(customer);
-    console.log(i);
+    const mergeCustomer = this.mergeCustomerProps(customer, this.tempCustomer)
+
+    this.httpService.update(mergeCustomer, i);
+    this.isEditPos = null;
+    this.isChanged = false;
   }
 
   deleteCustomer(customer: Customer): void {
-    console.log(customer)
+    this.httpService.delete(customer);
   }
 
-  setValue() {
-    
+  setValue(key: string, value: string, original: string): void {
+    if (value !== original && value !== this.tempCustomer[key]) {
+      this.tempCustomer[key] = value;
+      !this.isChanged && (this.isChanged = true);
+    }
+  }
+
+  private resetCustomer(): Customer {
+    return {
+      key: null,
+      name: null,
+      email: null,
+      mobile: null,
+      location: null
+    }
+  }
+
+  private mergeCustomerProps(original: Customer, temp: any): Customer {
+    const result: any = {...original};
+
+    Object.keys(temp).forEach(key => {
+      if (temp[key]) {
+        result[key] = temp[key];
+      }
+      console.log();
+    })
+    return result;
   }
 
 }

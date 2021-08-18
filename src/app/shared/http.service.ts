@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 
 const url = 'https://app-database-59520-default-rtdb.europe-west1.firebasedatabase.app/customers';
 const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+// https://app-database-59520-default-rtdb.europe-west1.firebasedatabase.app/
 
 @Injectable({
   providedIn: 'root'
@@ -43,14 +44,25 @@ export class HttpService {
     )
   }
 
-  update() {
+  // Update => PUT
+  update(customer: Customer, i: number): void {
+    const {key, ...data} = customer;
 
+    this.httpClient.put<Customer>(`${url}/${key}.json`, data, httpOptions).subscribe(
+      () => this.customers[i] = customer,
+      catchError(this.errorHandler<Customer>('PUT'))
+    )
   }
 
-  delete() {
-    
+  // Delete => DELETE
+  delete(customer: Customer): void {
+    this.httpClient.delete<void>(`${url}/${customer.key}.json`, httpOptions).subscribe(
+      () => this.customers.splice(this.customers.indexOf(customer), 1),
+      catchError(this.errorHandler<void>('DELETE'))
+    )
   }
 
+  // Errors handler
   private errorHandler<T>(operation: string, res?: T): any {
     return (err: any): Observable<T> => {
       console.error(`${operation} failed: ${err}`)
